@@ -13,6 +13,7 @@ router.get('/login', userController.login);
 
 //Server
 router.post('/auth/google-login', userController.verifyGoogleLogin);
+router.get('/register', checkSession ,userController.register);
 router.get('/logout', userController.logout);
 router.get('/get/:id', userController.getUserDataById);
 router.post('/get-me', checkSession, userController.getLoggedInUserData);

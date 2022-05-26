@@ -2,7 +2,6 @@ const path = require('path');
 const ConversationModel = require('../models/conversation.model');
 const UserModel = require('../models/user.model');
 
-
 class ConversationController {
     
     //[GET] /chat
@@ -107,7 +106,6 @@ class ConversationController {
                     })
                 }
                 res.render('chat-box', {
-                    link: `http://localhost:3030/client.js`,
                     conversation: conv,
                     sender: sender,
                     receiver: receiver,
@@ -125,7 +123,6 @@ class ConversationController {
             convRecord.save()
                .then((result) =>{
                    res.render('chat-box',{
-                    link: `http://localhost:3030/client.js`,
                     conversation: result,
                     sender: sender,
                     receiver: receiver,

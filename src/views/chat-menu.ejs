@@ -5,6 +5,10 @@
       <div id="error-container"></div>
       <p>Number of new messages: <%=count_new_message%></p>
       <a href="/chat/all" class="view-message">View my messages</a>
+      <form action="/search" method="post">
+         <input type="text" name="search_by_text" id="search_by_text">
+         <button type="submit">search</button>
+      </form>
       <br><br>
    </body>
 </html>

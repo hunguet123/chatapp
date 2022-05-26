@@ -1,6 +1,7 @@
 const UserModel = require('../models/user.model.js');
 const QRcode = require('qrcode');
 const dotenv = require('dotenv');
+const text = require('body-parser/lib/types/text');
 dotenv.config();
 
 const {FRONTEND_HOST} = process.env;
@@ -41,6 +42,25 @@ class siteController {
 
     // [POST] /search-by-text
     searchByText(req, res) {
+       let text = req.body.search_by_text;
+       
+        UserModel.find( {
+            $or: [
+                {"username": {"$regex": text}},
+                {"given_name": {"$regex": text}},
+                {"family_name": {"$regex": text}},
+                {"email": {"$regex": text}}
+            ],
+            $nor: {"username": req.username}
+           }) 
+       .then(result => {
+            res.render('view-list-partner', {
+                AllUser: result,
+            });
+       })
+       .catch(err =>{
+            res.send(err);
+       })
        
     }   
 

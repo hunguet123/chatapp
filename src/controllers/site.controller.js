@@ -50,8 +50,7 @@ class siteController {
                 {"given_name": {"$regex": text}},
                 {"family_name": {"$regex": text}},
                 {"email": {"$regex": text}}
-            ],
-            $nor: {"username": req.username}
+            ]
            }) 
        .then(result => {
             res.render('view-list-partner', {

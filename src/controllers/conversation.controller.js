@@ -188,6 +188,106 @@ class ConversationController {
                 res.json({error: err});
             })
     }
+
+    videoCall(req,res,next) {
+        let sender = req.user;
+        let receiver = undefined;
+
+        //// Check if the partner exists or not: ////
+        UserModel.findById(req.params.id)
+            .then(partner => {
+                if (! partner) {
+                    return res.status(404).json({
+                        message: "Invalid partner id.",
+                        sender: sender,
+                        receiver: undefined,
+                    })
+                }
+                receiver = partner;
+                
+                //// Find a conversation between the two users: ////
+                ConversationModel.findOne(
+                    {
+                        $or: [
+                            {
+                                "member.userID_1": sender._id,
+                                "member.userID_2": receiver._id,
+                            },
+                            {
+                                "member.userID_1": receiver._id,
+                                "member.userID_2": sender._id,
+                            },
+                        ]
+                    }
+                ).then(conv => {
+                    if (conv) {
+                        //// Update seen status ////
+                        updateSeenStatus(conv, partner);
+                    }
+                     else {
+                        //// Create a new conversation ////
+                        createANewConversation();
+                     }
+                })
+                
+            })
+            .catch(err => {
+                res.status(500).json({
+                    message: 'Error when finding user id',
+                    error: err.message,
+                })
+            });
+        
+        function updateSeenStatus(conv, partner) {
+            ConversationModel.updateMany({
+                _id: conv._id,
+            }, {
+                $set: {
+                    "messages.$[msg].receiver_seen": true,
+                }
+            }, {
+                arrayFilters: [
+                    {
+                        $and: [
+                            {"msg.sender": partner._id},
+                            {"msg.receiver_seen": false},
+                        ]
+                    }
+                ]
+            }, (err, result) => {
+                if (err) {
+                    res.status(500).json({
+                        err: err,
+                    })
+                }
+                res.render('video-call', {
+                    conversation_id: conv._id,
+                    sender: sender._id,
+                    receiver: receiver._id,
+                })
+            })
+        }
+
+        function createANewConversation() {
+            const convRecord = new ConversationModel({
+                member: {
+                    userID_1: sender._id,
+                    userID_2: receiver._id,
+                }
+            });
+            convRecord.save()
+               .then((result) =>{
+                   res.render('video-call',{
+                    conversation: result._id,
+                    sender: sender._id,
+                    receiver: receiver._id,
+                   })
+               })
+               .catch(err =>{
+                   console.log(err);
+               })
+        }
+    }
 }
 
 module.exports = new ConversationController(); 

@@ -7,5 +7,6 @@ const checkSession = require('../middlewares/check-session.js');
 router.get('/all', checkSession, conversationController.viewAllConversations);
 router.get('/box/:id', checkSession, conversationController.chatBox);
 router.get('/', checkSession, conversationController.viewChatMenu);
+router.get('/box/video-call/:id', checkSession, conversationController.videoCall);
 
 module.exports = router;

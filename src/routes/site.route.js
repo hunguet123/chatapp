@@ -9,6 +9,9 @@ router.post('/search', siteController.searchByText);
 router.get('/client.js', (req, res) => {
     res.sendFile(path.resolve('src/client.js') );
 })
+router.get('/script.js', (req, res) => {
+    res.sendFile(path.resolve('src/script.js'));
+})
 
 
 module.exports = router;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>chatbox</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>
 </head>
@@ -13,6 +13,7 @@
         &
       <h1 id="receiverName" aria-valuetext="<%=receiver.username%>"><%=receiver.username%></h1>
       <h2 id="room" aria-valuetext="<%=conversation._id%>">Room id: <%=conversation._id%></h2>
+      <a href="/chat/box/video-call/<%=receiver._id%>">video-call</a>
       <input type="text" id="message">
       <button type="button" name="button" onclick="sendMessage()">Send</button>
       <div id="message-container">

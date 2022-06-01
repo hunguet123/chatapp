@@ -55,10 +55,9 @@ function disconnect() {
     socket.on('user-disconnected', userId => {
         const call = myPeer.call(userId, stream);
         const video = document.getElementById('video');
-        const video_partner = document.getElementById('video-partner');
         call.on('close', () => {
             video.remove();
-            video_partner.remove();
+            videoGrid.remove();
         })
     })
 }

@@ -55,10 +55,10 @@ const ConversationModel = require('./models/conversation.model');
 io.on('connection', function(socket){
    socket.on('setRoom', function(room_id, userId) {
       socket.join(room_id);
-      socket.broadcast.emit('user-connected', userId); 
+      socket.broadcast.to(room_id).emit('user-connected', userId); 
         
       socket.on('disconnect', () => {
-         socket.broadcast.emit('user-disconnected', userId);
+         socket.broadcast.to(room_id).emit('user-disconnected', userId);
       })
    });
    socket.on('msg', function(data){

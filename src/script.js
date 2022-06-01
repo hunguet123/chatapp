@@ -1,5 +1,5 @@
 const socket = io.connect('https://testapp2701.herokuapp.com/');
-const videoGrid = document.getElementById('video-grid')
+const videoGrid = document.getElementById('video-partner')
 
 const myPeer = new Peer(undefined, {})
 const myVideo = document.createElement('video')

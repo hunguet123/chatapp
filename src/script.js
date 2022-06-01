@@ -54,10 +54,11 @@ function addVideoStream(video, stream) {
 function disconnect() {
     socket.on('user-disconnected', userId => {
         const call = myPeer.call(userId, stream);
-        const video = document.getElementById('video');
+        //const video = document.getElementById('video');
         call.on('close', () => {
-            video.remove();
+            //video.remove();
             videoGrid.remove();
+            myVideo.remove();
         })
     })
 }

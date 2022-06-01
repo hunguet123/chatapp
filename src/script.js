@@ -50,3 +50,9 @@ function addVideoStream(video, stream) {
     })
     videoGrid.append(video)
 }
+
+function disconnect() {
+    socket.on('user-disconnected', userId => {
+        console.log(userId)
+    })
+}

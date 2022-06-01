@@ -53,8 +53,13 @@ const io = new Server(server);
 const ConversationModel = require('./models/conversation.model');
 
 io.on('connection', function(socket){
-   socket.on('setRoom', function(room_id) {
+   socket.on('setRoom', function(room_id, userId) {
       socket.join(room_id);
+      socket.broadcast.emit('user-connected', userId); 
+        
+      socket.on('disconnect', () => {
+         socket.broadcast.emit('user-disconnected', userId);
+      })
    });
    socket.on('msg', function(data){
       io.in(data.room_id).emit('newmsg', data);

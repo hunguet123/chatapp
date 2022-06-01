@@ -7,7 +7,7 @@ function initConversation(sender_id, conv_id, sender_name){
    room_id = conv_id;
    user_id = sender_id;
    user_name = sender_name;
-   socket.emit('setRoom', conv_id);
+   socket.emit('setRoom', conv_id, sender_id);
 };
 
 socket.on('userExists', function(data){

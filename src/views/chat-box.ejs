@@ -7,13 +7,14 @@
     <title>chatbox</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>
+    
 </head>
 <body onload="initConversation('<%=sender._id%>', '<%=conversation._id%>', '<%=sender.username%>') ">
     <h1 id="name" aria-valuetext="<%=sender._id%>"><%=sender.username%></h1>
         &
       <h1 id="receiverName" aria-valuetext="<%=receiver.username%>"><%=receiver.username%></h1>
       <h2 id="room" aria-valuetext="<%=conversation._id%>">Room id: <%=conversation._id%></h2>
-      <a href="/chat/box/video-call/<%=receiver._id%>">video-call</a>
+      <button onclick="openWindow('<%=receiver._id%>')">video-call</button>
       <input type="text" id="message">
       <button type="button" name="button" onclick="sendMessage()">Send</button>
       <div id="message-container">
